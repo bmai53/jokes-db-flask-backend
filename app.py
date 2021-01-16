@@ -50,7 +50,7 @@ def add_joke():
     }
     if request.json['joke'] == '':
         print("Empty joke")
-        return make_response(jsonify({"error" : "joke not set"}))
+        return make_response(jsonify({"error" : "joke not set"}), 400)
     else:
         print(new_joke)
         db.insert_one(new_joke)
