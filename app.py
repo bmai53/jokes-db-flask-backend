@@ -48,9 +48,13 @@ def add_joke():
         "joke": request.json['joke'],
         "answer": request.json['answer']
     }
-    print(new_joke)
-    db.insert_one(new_joke)
-    return make_json(new_joke)
+    if request.json['joke'] == '':
+        print("Empty joke")
+        return make_response(jsonify({"error" : "joke not set"}))
+    else:
+        print(new_joke)
+        db.insert_one(new_joke)
+        return make_json(new_joke)
 
 if __name__ == "__main__":
     app.run(debug=True)
