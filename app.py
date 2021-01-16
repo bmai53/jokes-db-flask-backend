@@ -1,4 +1,5 @@
 from flask import Flask, make_response, jsonify, request
+from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -9,6 +10,8 @@ import math
 load_dotenv()
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["MONGO_URI"] = os.environ["MONGO_CONNECTION"]
 db = PyMongo(app).db.jokes
 
@@ -21,6 +24,7 @@ def home_page():
    return "Hello World"
 
 @app.route("/random")
+@cross_origin()
 def random_joke():
     rand = random.random()
     count = db.count()
@@ -31,12 +35,14 @@ def random_joke():
     return make_json(joke)
 
 @app.route("/<id>")
+@cross_origin()
 def get_joke(id):
     joke = db.find_one_or_404({'_id': ObjectId(id)})
     print(joke)
     return make_json(joke)
 
 @app.route('/add', methods=['POST'])
+@cross_origin()
 def add_joke():
     new_joke = {
         "joke": request.json['joke'],
