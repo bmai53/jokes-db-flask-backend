@@ -58,7 +58,7 @@ def add_joke():
 
 @app.route('/like/<id>', methods=['POST'])    
 @cross_origin()
-def add_like():
+def add_like(id):
     joke = db.find_one_or_404({'_id': ObjectId(id)})
     current_likes = 0
     if 'likes' in joke:
