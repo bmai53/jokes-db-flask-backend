@@ -56,5 +56,17 @@ def add_joke():
         db.insert_one(new_joke)
         return make_json(new_joke)
 
+@app.route('/like/<id>', methods=['POST'])    
+@cross_origin()
+def add_like():
+    joke = db.find_one_or_404({'_id': ObjectId(id)})
+    current_likes = 0
+    if 'likes' in joke:
+        current_likes = joke['likes']        
+    joke['likes'] = current_likes + 1
+    print(joke)
+    db.save(joke)
+    return make_json(joke)        
+
 if __name__ == "__main__":
     app.run(debug=True)
