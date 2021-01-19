@@ -46,7 +46,8 @@ def get_joke(id):
 def add_joke():
     new_joke = {
         "joke": request.json['joke'],
-        "answer": request.json['answer']
+        "answer": request.json['answer'],
+        "userId": request.json['userId']
     }
     if request.json['joke'] == '':
         print("Empty joke")
