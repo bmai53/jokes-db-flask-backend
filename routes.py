@@ -1,4 +1,4 @@
-from __main__ import app, db
+from app import app, db
 from flask import make_response, jsonify, request
 from flask_cors import CORS, cross_origin
 from bson.objectid import ObjectId
